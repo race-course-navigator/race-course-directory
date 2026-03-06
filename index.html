@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>トレイルランニング レース・コース図鑑</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Outfit:wght@400;700&family=Noto+Sans+JP:wght@400;700&display=swap"
+        rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .upcoming-races-scroll::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .upcoming-races-scroll::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+
+        .upcoming-races-scroll::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="hero" style="padding-top: 6rem; padding-bottom: 2rem;">
+        <div class="hero-overlay"></div>
+        <div class="container hero-content">
+            <h1 class="fade-in" style="margin-bottom: 1.5rem;">トレイルランニング<br><span class="accent">レース・コース図鑑</span></h1>
+            <p class="subtitle fade-in delay-1"
+                style="max-width: 800px; margin-left: auto; margin-right: auto; line-height: 1.8; word-break: keep-all;">
+                月や地域、難易度によるソート機能で、絞り込みやすくしています。<br>
+                概要程度の情報量ですが、公式HP等閲覧へのきっかけとしてご使用いただけたら嬉しいです。<br>
+                <br>
+                ※AI活用につき誤情報が含まれる可能性があります。必ず公式サイトによる確認をお願いします。<br>
+                次に走ってみたいレース・コースが見つかりますように！
+            </p>
+        </div>
+    </header>
+
+    <nav class="tab-nav">
+        <div class="container tabs">
+            <button class="tab-btn active" data-tab="races"><i class="fas fa-flag-checkered"></i> レース情報</button>
+            <button class="tab-btn" data-tab="courses"><i class="fas fa-map-marked-alt"></i> コース情報</button>
+        </div>
+    </nav>
+
+    <main class="container tab-content" id="courses-section">
+        <p class="course-disclaimer fade-in delay-2"
+            style="font-size: 0.85rem; margin-top: 1.5rem; margin-bottom: 1.5rem; color: var(--text-color); opacity: 0.8; line-height: 1.5;">
+            <i class="fas fa-info-circle"></i>
+            ＊コースは順次追加予定
+        </p>
+        <section class="filters fade-in delay-3">
+            <div class="filter-group" data-group="region">
+                <h3>Region <small>地域</small></h3>
+                <div class="chips">
+                    <button class="chip active" data-value="all">All</button>
+                    <button class="chip" data-value="kanto">Kanto (関東)</button>
+                    <button class="chip" data-value="chubu">Chubu (中部)</button>
+                    <button class="chip" data-value="kansai">Kansai (近畿)</button>
+                </div>
+            </div>
+            <div class="filter-group" data-group="area" id="prefecture-filter-group">
+                <h3>Prefecture <small>都道府県</small></h3>
+                <div class="chips" id="area-filters">
+                    <!-- Dynamically populated -->
+                </div>
+            </div>
+            <div class="filter-group" data-group="level">
+                <h3>Difficulty <small>難易度</small></h3>
+                <div class="chips" id="level-filters">
+                    <button class="chip active" data-value="all">All</button>
+                    <button class="chip" data-value="初級">初級</button>
+                    <button class="chip" data-value="中級">中級</button>
+                    <button class="chip" data-value="上級">上級</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="course-grid" id="course-list">
+            <!-- Courses will be injected here by script.js -->
+        </section>
+    </main>
+
+    <main class="container tab-content active" id="races-section">
+        <section class="upcoming-races-highlight fade-in delay-1"
+            style="margin-bottom: 2rem; background: var(--card-bg); padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+            <h2 style="font-size: 1.2rem; color: var(--accent-color); margin-bottom: 0.5rem;"><i
+                    class="fas fa-bullhorn"></i> 開催２〜３ヶ月前！まだエントリーに間に合うかもしれないレース</h2>
+            <div style="margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+                <label for="upcoming-region-filter"
+                    style="font-size: 0.9rem; font-weight: bold; color: var(--text-color);"><i
+                        class="fas fa-filter"></i> 地域で絞り込み:</label>
+                <select id="upcoming-region-filter" class="custom-select"
+                    style="max-width: 200px; padding: 0.4rem; font-size: 0.9rem;">
+                    <option value="all">すべての地域</option>
+                    <option value="北海道・東北">北海道・東北</option>
+                    <option value="関東">関東</option>
+                    <option value="中部">中部</option>
+                    <option value="近畿">近畿</option>
+                    <option value="中国・四国">中国・四国</option>
+                    <option value="九州・沖縄">九州・沖縄</option>
+                </select>
+            </div>
+            <p style="font-size: 0.85rem; opacity: 0.8; margin-bottom: 1rem;"><i
+                    class="fas fa-exclamation-triangle"></i> ※エントリー期間が既に過ぎている大会も含まれている可能性があります。公式サイトを必ずご確認ください</p>
+            <div class="upcoming-races-scroll" id="upcoming-races-list"
+                style="display: flex; overflow-x: auto; gap: 1rem; padding-bottom: 0.5rem; scroll-snap-type: x mandatory;">
+                <!-- Dynamically populated -->
+            </div>
+        </section>
+
+        <section class="race-search-container fade-in delay-2">
+            <p class="race-disclaimer"
+                style="font-size: 0.85rem; margin-bottom: 1.5rem; color: var(--text-color); opacity: 0.8; line-height: 1.5;">
+                <i class="fas fa-info-circle"></i>
+                本サイトに掲載している大会情報は、各大会の公式発表に基づく事実情報を整理したものです。各大会の詳細、最新情報は、必ず公式サイトをご確認ください。
+            </p>
+            <div class="filter-group" data-group="race-region">
+                <h3>Region <small>地域</small></h3>
+                <div class="chips">
+                    <button class="chip active" data-value="all">All</button>
+                    <button class="chip" data-value="北海道・東北">北海道・東北</button>
+                    <button class="chip" data-value="関東">関東</button>
+                    <button class="chip" data-value="中部">中部</button>
+                    <button class="chip" data-value="近畿">近畿</button>
+                    <button class="chip" data-value="中国・四国">中国・四国</button>
+                    <button class="chip" data-value="九州・沖縄">九州・沖縄</button>
+                </div>
+            </div>
+            <div class="filter-group" style="margin-top: 1rem;" data-group="race-prefecture">
+                <h3>Prefecture <small>都道府県</small></h3>
+                <div class="chips" id="race-prefecture-filters">
+                    <!-- Dynamically populated -->
+                    <button class="chip active" data-value="all">All</button>
+                </div>
+            </div>
+
+            <div class="race-filters-bar" style="margin-top: 1.5rem;">
+                <select id="race-month-filter" class="custom-select">
+                    <option value="all">すべての月</option>
+                    <option value="1">1月</option>
+                    <option value="2">2月</option>
+                    <option value="3">3月</option>
+                    <option value="4">4月</option>
+                    <option value="5">5月</option>
+                    <option value="6">6月</option>
+                    <option value="7">7月</option>
+                    <option value="8">8月</option>
+                    <option value="9">9月</option>
+                    <option value="10">10月</option>
+                    <option value="11">11月</option>
+                    <option value="12">12月</option>
+                </select>
+                <div class="search-box">
+                    <input type="text" id="race-keyword-search" placeholder="キーワードでレースを探す...">
+                    <i class="fas fa-search"></i>
+                </div>
+            </div>
+        </section>
+        <div class="race-grid" id="race-list">
+            <!-- Races will be injected here -->
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Trail Running Directory Project.</p>
+            <p class="disclaimer-text">
+                <i class="fas fa-exclamation-triangle"></i>
+                免責事項：当サイトに掲載されている情報は、管理人が個人的に収集・整理したものであり、その正確性、完全性、最新性を保証するものではありません。トレイルランニングや登山は、天候や路面状況により重大な事故につながるリスクを伴います。実際にコースを走行される際は、必ず公式サイトや管轄機関の最新の情報を確認し、登山届の提出や装備の携行を含め、利用者自身の判断と責任において行動してください。当サイトの利用により生じたトラブルや損失・損害について、一切の責任を負いかねます。
+            </p>
+            <div class="social-placeholders">
+                <i class="fab fa-x-twitter"></i>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Overlay for Details -->
+    <div id="modal-container" class="modal">
+        <div class="modal-content">
+            <button class="close-modal">&times;</button>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <script src="data_kanto.js"></script>
+    <script src="data_chubu.js"></script>
+    <script src="data_kansai.js"></script>
+    <script src="data.js"></script>
+    <script src="races_data.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
