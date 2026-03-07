@@ -341,7 +341,7 @@ function renderUpcomingRaces() {
     });
 
     if (upcoming.length === 0) {
-        container.innerHTML = `<p style="font-size: 0.9rem; opacity: 0.7; padding: 1rem;">該当する大会がありません。</p>`;
+        container.innerHTML = `<p style="font-size: 0.9rem; opacity: 0.7; padding: 1rem; text-align: center;">該当する大会がありません。</p>`;
         return;
     }
 
@@ -362,9 +362,6 @@ function renderUpcomingRaces() {
             `).join('')}
         </div>
     `;
-    // Remove scroll style
-    container.style.display = "block";
-    container.style.overflowX = "visible";
 }
 
 function renderRaces() {
