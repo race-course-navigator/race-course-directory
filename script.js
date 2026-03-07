@@ -70,17 +70,25 @@ function renderCourses() {
         return regionMatch && areaMatch && levelMatch;
     });
 
+    const fragment = document.createDocumentFragment();
+
     filtered.forEach((course, index) => {
         const card = document.createElement("div");
         card.className = "course-card fade-in";
-        card.style.animationDelay = `${index * 0.1}s`;
+        card.style.animationDelay = `${Math.min(index * 0.05, 1)}s`; // Cap delay
 
         const encodedQuery = encodeURIComponent(course.mapQuery);
-        const freeEmbedUrl = `https://maps.google.com/maps?q=${encodedQuery}&t=&z=13&ie=UTF8&iwloc=&output=embed`;
+        // Direct Google Maps Search URL for native app triggering
+        const googleMapsAppUrl = `https://www.google.com/maps/search/?api=1&query=${encodedQuery}`;
 
+        // Use a static-looking placeholder or a generated SVG for the map preview
+        // This avoids 20+ iframes loading at once
         card.innerHTML = `
             <div class="card-image">
-                <iframe width="100%" height="100%" src="${freeEmbedUrl}" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+                <div class="map-placeholder">
+                    <i class="fas fa-map-marked-alt"></i>
+                    <span>Tap to view map</span>
+                </div>
                 <div class="badge-area">${course.area}</div>
                 <div class="map-overlay"></div>
             </div>
@@ -103,32 +111,30 @@ function renderCourses() {
                 <div class="trailhead-info">
                     <i class="fas fa-location-dot"></i> 登山口: ${course.trailhead}
                 </div>
-                <div class="card-summary">
-                    <ul style="list-style-type: disc; padding-left: 1.5rem; margin: 0; opacity: 0.9; font-size: 0.9rem;">
-                        ${course.summary.split('<br>').map(s => `<li>${s.replace('・', '')}</li>`).join('')}
-                    </ul>
-                </div>
                 <div class="card-footer">
                     <div class="station-info">
-                        <span class="station"><i class="fas fa-train"></i>${course.transit.split('、')[0].split('駅')[0]}駅</span>
+                         <span class="station"><i class="fas fa-train"></i>${course.transit.split('、')[0].split('駅')[0]}駅</span>
                         <span class="access-pill">${course.accessTime}分</span>
                     </div>
-                    <i class="fas fa-chevron-right text-accent"></i>
+                    <a href="${googleMapsAppUrl}" target="_blank" class="maps-direct-link" title="Googleマップで開く" onclick="event.stopPropagation();">
+                        <i class="fas fa-directions"></i> App
+                    </a>
                 </div>
             </div>
         `;
 
         card.addEventListener("click", () => showDetail(course));
-        container.appendChild(card);
+        fragment.appendChild(card);
     });
+    container.appendChild(fragment);
 }
 
 function showDetail(course) {
     const modal = document.getElementById("modal-container");
     const body = document.getElementById("modal-body");
 
-    // Google Map URL encoding
     const encodedQuery = encodeURIComponent(course.mapQuery);
+    const googleMapsAppUrl = `https://www.google.com/maps/search/?api=1&query=${encodedQuery}`;
     const freeEmbedUrl = `https://maps.google.com/maps?q=${encodedQuery}&t=&z=14&ie=UTF8&iwloc=&output=embed`;
 
     body.innerHTML = `
@@ -137,9 +143,14 @@ function showDetail(course) {
             <h2>${course.name}</h2>
         </div>
         <div class="modal-grid">
-            <div class="modal-main-image">
-                <p class="map-label" style="font-size: 0.85rem; margin-bottom: 0.5rem; color: var(--text-color); opacity: 0.8; font-weight: bold;"><i class="fas fa-map-marker-alt"></i> コース周辺map</p>
-                <iframe width="100%" height="100%" src="${freeEmbedUrl}" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+            <div class="modal-main-image" id="modal-map-container">
+                <div class="map-load-prompt">
+                    <i class="fas fa-map-location-dot" style="font-size: 3rem; color: var(--accent-color); margin-bottom: 1rem;"></i>
+                    <button class="btn-load-map" onclick="loadModalMap('${freeEmbedUrl}')">
+                        <i class="fas fa-play"></i> インタラクティブ地図を読み込む
+                    </button>
+                    <p style="font-size: 0.8rem; margin-top: 10px; opacity: 0.7;">※データ通信量にご注意ください</p>
+                </div>
             </div>
             <div class="modal-info">
                 <div class="detail-section">
@@ -158,7 +169,7 @@ function showDetail(course) {
                         <span class="value difficulty-${course.difficulty}">${course.difficulty}</span>
                     </div>
                     <div class="detail-box">
-                        <span class="label" style="font-size: 0.7rem; line-height: 1.2;">最寄り駅からの<br>アクセス</span>
+                        <span class="label" style="font-size: 0.7rem; line-height: 1.2;">最寄り駅アクセス</span>
                         <span class="value">${course.accessTime}分</span>
                     </div>
                 </div>
@@ -173,14 +184,25 @@ function showDetail(course) {
                 </div>` : ''}
             </div>
         </div>
-        <div class="modal-actions">
+        <div class="modal-actions" style="display: flex; gap: 10px; flex-wrap: wrap;">
             <a href="${course.url}" target="_blank" class="btn-primary">公式サイト <i class="fas fa-external-link-alt"></i></a>
+            <a href="${googleMapsAppUrl}" target="_blank" class="btn-secondary" style="background: #4285F4; color: white;">
+                Googleマップアプリで開く <i class="fas fa-directions"></i>
+            </a>
         </div>
     `;
 
     modal.classList.add("show");
     document.body.style.overflow = "hidden";
 }
+
+// Global helper for loading map in modal
+window.loadModalMap = function (url) {
+    const container = document.getElementById("modal-map-container");
+    if (container) {
+        container.innerHTML = `<iframe width="100%" height="100%" src="${url}" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>`;
+    }
+};
 
 // Close Modal
 document.querySelector(".close-modal").addEventListener("click", () => {
