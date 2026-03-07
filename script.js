@@ -27,16 +27,20 @@ let activeLevel = "all";
 
 function updateAreaFilters() {
     const container = document.getElementById("area-filters");
-    if (!container) return;
+    const group = document.getElementById("prefecture-filter-group");
+    if (!container || !group) return;
+
+    if (activeRegion === "all") {
+        group.classList.add("filter-group-hidden");
+        return;
+    } else {
+        group.classList.remove("filter-group-hidden");
+    }
 
     // 現在選択されている地域に含まれる（かつデータが存在する）都道府県を抽出
     let availableAreas = [];
-    if (activeRegion === "all") {
-        availableAreas = [...new Set(courses.map(c => c.area))];
-    } else {
-        const allowedPrefectures = REGION_MAP[activeRegion];
-        availableAreas = [...new Set(courses.filter(c => allowedPrefectures.includes(c.area)).map(c => c.area))];
-    }
+    const allowedPrefectures = REGION_MAP[activeRegion];
+    availableAreas = [...new Set(courses.filter(c => allowedPrefectures.includes(c.area)).map(c => c.area))];
 
     container.innerHTML = `<button class="chip ${activeArea === "all" ? 'active' : ''}" data-value="all">All</button>`;
 
@@ -111,14 +115,11 @@ function renderCourses() {
                 <div class="trailhead-info">
                     <i class="fas fa-location-dot"></i> 登山口: ${course.trailhead}
                 </div>
-                <div class="card-footer">
-                    <div class="station-info">
+                <div class="card-footer" style="justify-content: flex-end;">
+                    <div class="station-info" style="margin-right: auto;">
                          <span class="station"><i class="fas fa-train"></i>${course.transit.split('、')[0].split('駅')[0]}駅</span>
                         <span class="access-pill">${course.accessTime}分</span>
                     </div>
-                    <a href="${googleMapsAppUrl}" target="_blank" class="maps-direct-link" title="Googleマップで開く" onclick="event.stopPropagation();">
-                        <i class="fas fa-directions"></i> App
-                    </a>
                 </div>
             </div>
         `;
@@ -185,10 +186,10 @@ function showDetail(course) {
             </div>
         </div>
         <div class="modal-actions" style="display: flex; gap: 10px; flex-wrap: wrap;">
-            <a href="${course.url}" target="_blank" class="btn-primary">公式サイト <i class="fas fa-external-link-alt"></i></a>
-            <a href="${googleMapsAppUrl}" target="_blank" class="btn-secondary" style="background: #4285F4; color: white;">
+            <a href="${googleMapsAppUrl}" target="_blank" class="btn-secondary" style="background: #4285F4; color: white; border-color: #4285F4;">
                 Googleマップアプリで開く <i class="fas fa-directions"></i>
             </a>
+            <a href="${course.url}" target="_blank" class="btn-primary">公式サイト <i class="fas fa-external-link-alt"></i></a>
         </div>
     `;
 
@@ -265,7 +266,15 @@ let raceKeyword = "";
 
 function updateRacePrefectureFilters() {
     const container = document.getElementById("race-prefecture-filters");
-    if (!container) return;
+    const group = document.getElementById("race-prefecture-filter-group");
+    if (!container || !group) return;
+
+    if (raceRegion === "all") {
+        group.classList.add("filter-group-hidden");
+        return;
+    } else {
+        group.classList.remove("filter-group-hidden");
+    }
 
     const allValidPrefs = Object.values(RACE_REGION_MAP).flat();
     let availablePrefs = new Set();
@@ -310,11 +319,13 @@ function renderUpcomingRaces() {
     if (!container) return;
 
     const currentMonth = new Date().getMonth() + 1; // 1-12
-    const targetMonth1 = (currentMonth + 2 - 1) % 12 + 1;
-    const targetMonth2 = (currentMonth + 3 - 1) % 12 + 1;
+    const targetMonth1 = (currentMonth + 1) % 12 || 12; // 翌月
+    const targetMonth2 = (currentMonth + 2) % 12 || 12; // 翌々月
+    const targetMonth3 = (currentMonth + 3) % 12 || 12; // 3ヶ月後
 
-    // Extract upcoming races matching the target months and filter out those with unknown dates
-    let upcoming = races_data.filter(r => r.month === targetMonth1 || r.month === targetMonth2);
+    const targetMonths = [targetMonth1, targetMonth2, targetMonth3];
+
+    let upcoming = races_data.filter(r => targetMonths.includes(r.month));
 
     if (upcomingRaceRegion !== "all") {
         const allowedPrefs = RACE_REGION_MAP[upcomingRaceRegion];
@@ -323,39 +334,37 @@ function renderUpcomingRaces() {
         }
     }
 
+    // Sort by month/date approximated
+    upcoming.sort((a, b) => {
+        if (a.month !== b.month) return a.month - b.month;
+        return a.date.localeCompare(b.date);
+    });
+
     if (upcoming.length === 0) {
-        container.innerHTML = `<p style="font-size: 0.9rem; opacity: 0.7;">該当する大会がありません。</p>`;
+        container.innerHTML = `<p style="font-size: 0.9rem; opacity: 0.7; padding: 1rem;">該当する大会がありません。</p>`;
         return;
     }
 
-    container.innerHTML = "";
-    upcoming.forEach(race => {
-        const card = document.createElement("div");
-        card.className = "race-card";
-        // Inline styles for horizontal scrolling layout
-        card.style.minWidth = "280px";
-        card.style.scrollSnapAlign = "start";
-        card.style.flexShrink = "0";
-        card.style.margin = "0";
-
-        card.innerHTML = `
-            <div class="race-header">
-                <span class="race-date" style="color: var(--accent-color); font-weight: bold;">${race.date}</span>
-                <span class="race-pref">${race.prefecture}</span>
-            </div>
-            <h3 style="font-size: 1.1rem; margin: 0.75rem 0;">${race.name}</h3>
-            <div class="race-info" style="margin-bottom: 1rem;">
-                <div class="info-item">
-                    <span class="info-label">Dist.</span>
-                    <span class="info-val">${race.distance}</span>
+    container.innerHTML = `
+        <div class="upcoming-list-compact">
+            ${upcoming.map(race => `
+                <div class="upcoming-item-compact">
+                    <div class="u-date">${race.date}</div>
+                    <div class="u-info">
+                        <div class="u-name">${race.name}</div>
+                        <div class="u-meta">
+                            <span class="u-pref"><i class="fas fa-location-dot"></i> ${race.prefecture}</span>
+                            <span class="u-dist"><i class="fas fa-route"></i> ${race.distance}</span>
+                        </div>
+                    </div>
+                    <a href="${race.link}" target="_blank" class="u-link"><i class="fas fa-external-link-alt"></i></a>
                 </div>
-            </div>
-            <div class="card-footer" style="margin-top: auto;">
-                <a href="${race.link}" target="_blank" class="race-link" style="display: block; text-align: center; border: 1px solid var(--accent-color); border-radius: 4px; padding: 0.5rem; width: 100%;">公式サイト <i class="fas fa-external-link-alt"></i></a>
-            </div>
-        `;
-        container.appendChild(card);
-    });
+            `).join('')}
+        </div>
+    `;
+    // Remove scroll style
+    container.style.display = "block";
+    container.style.overflowX = "visible";
 }
 
 function renderRaces() {

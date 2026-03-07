@@ -37,7 +37,7 @@
         <div class="container hero-content">
             <h1 class="fade-in" style="margin-bottom: 1.5rem;">トレイルランニング<br><span class="accent">レース・コース図鑑</span></h1>
             <p class="subtitle fade-in delay-1"
-                style="max-width: 800px; margin-left: auto; margin-right: auto; line-height: 1.8; word-break: keep-all;">
+                style="max-width: 800px; margin-left: auto; margin-right: auto; line-height: 1.8; overflow-wrap: break-word; word-break: normal;">
                 月や地域、難易度によるソート機能で、絞り込みやすくしています。<br>
                 概要程度の情報量ですが、公式HP等閲覧へのきっかけとしてご使用いただけたら嬉しいです。<br>
                 <br>
@@ -70,7 +70,7 @@
                     <button class="chip" data-value="kansai">Kansai (近畿)</button>
                 </div>
             </div>
-            <div class="filter-group" data-group="area" id="prefecture-filter-group">
+            <div class="filter-group filter-group-hidden" data-group="area" id="prefecture-filter-group">
                 <h3>Prefecture <small>都道府県</small></h3>
                 <div class="chips" id="area-filters">
                     <!-- Dynamically populated -->
@@ -138,7 +138,8 @@
                     <button class="chip" data-value="九州・沖縄">九州・沖縄</button>
                 </div>
             </div>
-            <div class="filter-group" style="margin-top: 1rem;" data-group="race-prefecture">
+            <div class="filter-group filter-group-hidden" style="margin-top: 1rem;" data-group="race-prefecture"
+                id="race-prefecture-filter-group">
                 <h3>Prefecture <small>都道府県</small></h3>
                 <div class="chips" id="race-prefecture-filters">
                     <!-- Dynamically populated -->
