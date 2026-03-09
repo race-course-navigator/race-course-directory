@@ -304,6 +304,9 @@ document.querySelectorAll(".tab-btn").forEach(btn => {
             updateAreaFilters();
             renderCourses();
         }
+
+        // Scroll to top to ensure filters are visible
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 });
 
