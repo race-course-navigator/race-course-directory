@@ -103,26 +103,35 @@
                     <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
                 </summary>
                 <div class="upcoming-content">
-                    <div class="filter-group" style="margin-top: 1rem; margin-bottom: 1.5rem;">
-                        <span style="font-size: 0.9rem; font-weight: bold; margin-bottom: 0.5rem;"><i
-                                class="fas fa-filter"></i> 地域で絞り込み:</span>
-                        <select id="upcoming-region-filter"
-                            style="padding: 8px 12px; border-radius: 8px; border: 1px solid #ddd; background: white; font-size: 0.9rem; cursor: pointer;">
-                            <option value="all">すべての地域</option>
-                            <option value="北海道・東北">北海道・東北</option>
-                            <option value="関東">関東</option>
-                            <option value="中部">中部</option>
-                            <option value="近畿">近畿</option>
-                            <option value="中国・四国">中国・四国</option>
-                            <option value="九州・沖縄">九州・沖縄</option>
-                        </select>
+                    <p style="font-size: 0.8rem; opacity: 0.7; margin-bottom: 1rem; color: #d63031; font-weight: bold;">
+                        <i class="fas fa-exclamation-triangle"></i> ※エントリー期間が既に過ぎている大会も含まれている可能性があります。公式サイトを必ずご確認ください
+                    </p>
+                    <div class="filter-group"
+                        style="margin-top: 0.5rem; margin-bottom: 1.5rem; display: flex; gap: 15px; flex-wrap: wrap; align-items: center;">
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <span style="font-size: 0.9rem; font-weight: bold;"><i class="fas fa-filter"></i> 地域:</span>
+                            <select id="upcoming-region-filter"
+                                style="padding: 8px 12px; border-radius: 8px; border: 1px solid #ddd; background: white; font-size: 0.9rem; cursor: pointer;">
+                                <option value="all">すべての地域</option>
+                                <option value="北海道・東北">北海道・東北</option>
+                                <option value="関東">関東</option>
+                                <option value="中部">中部</option>
+                                <option value="近畿">近畿</option>
+                                <option value="中国・四国">中国・四国</option>
+                                <option value="九州・沖縄">九州・沖縄</option>
+                            </select>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <span style="font-size: 0.9rem; font-weight: bold;"> 都道府県:</span>
+                            <select id="upcoming-pref-filter"
+                                style="padding: 8px 12px; border-radius: 8px; border: 1px solid #ddd; background: white; font-size: 0.9rem; cursor: pointer;">
+                                <option value="all">すべて</option>
+                            </select>
+                        </div>
                     </div>
                     <div id="upcoming-races-list">
                         <!-- Upcoming races will be injected here -->
                     </div>
-                    <p style="font-size: 0.8rem; opacity: 0.7; margin-top: 1rem; padding: 0 10px;">
-                        <i class="fas fa-exclamation-triangle"></i> ※エントリー期間が既に過ぎている大会も含まれている可能性があります。公式サイトを必ずご確認ください
-                    </p>
                 </div>
             </details>
         </div>

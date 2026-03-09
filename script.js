@@ -21,9 +21,9 @@ const PREF_SUFFIX_MAP = {
     "福岡": "福岡県", "佐賀": "佐賀県", "長崎": "長崎県", "熊本": "熊本県", "大分": "大分県", "宮崎": "宮崎県", "鹿児島": "鹿児島県", "沖縄": "沖縄県"
 };
 
-let activeRegion = "all";
-let activeArea = "all";
-let activeLevel = "all";
+let activeRegion = ["all"];
+let activeArea = ["all"];
+let activeLevel = ["all"];
 
 function updateAreaFilters() {
     const container = document.getElementById("area-filters");
@@ -39,14 +39,18 @@ function updateAreaFilters() {
 
     // 現在選択されている地域に含まれる（かつデータが存在する）都道府県を抽出
     let availableAreas = [];
-    const allowedPrefectures = REGION_MAP[activeRegion];
-    availableAreas = [...new Set(courses.filter(c => allowedPrefectures.includes(c.area)).map(c => c.area))];
+    if (activeRegion.includes("all")) {
+        availableAreas = [...new Set(courses.map(c => c.area))];
+    } else {
+        const allowedPrefectures = activeRegion.flatMap(reg => REGION_MAP[reg] || []);
+        availableAreas = [...new Set(courses.filter(c => allowedPrefectures.includes(c.area)).map(c => c.area))];
+    }
 
-    container.innerHTML = `<button class="chip ${activeArea === "all" ? 'active' : ''}" data-value="all">All</button>`;
+    container.innerHTML = `<button class="chip ${activeArea.includes("all") ? 'active' : ''}" data-value="all">All</button>`;
 
     availableAreas.sort().forEach(area => {
         const btn = document.createElement("button");
-        btn.className = `chip ${activeArea === area ? 'active' : ''}`;
+        btn.className = `chip ${activeArea.includes(area) ? 'active' : ''}`;
         btn.dataset.value = area;
         btn.textContent = area.replace("県", "").replace("府", "").replace("東京都", "東京");
         container.appendChild(btn);
@@ -55,9 +59,19 @@ function updateAreaFilters() {
     // Re-bind listeners for dynamic area chips
     container.querySelectorAll(".chip").forEach(chip => {
         chip.addEventListener("click", () => {
-            container.querySelectorAll(".chip").forEach(c => c.classList.remove("active"));
-            chip.classList.add("active");
-            activeArea = chip.dataset.value;
+            const val = chip.dataset.value;
+            if (val === "all") {
+                activeArea = ["all"];
+            } else {
+                if (activeArea.includes("all")) activeArea = [];
+                if (activeArea.includes(val)) {
+                    activeArea = activeArea.filter(v => v !== val);
+                    if (activeArea.length === 0) activeArea = ["all"];
+                } else {
+                    activeArea.push(val);
+                }
+            }
+            updateAreaFilters();
             renderCourses();
         });
     });
@@ -68,9 +82,9 @@ function renderCourses() {
     container.innerHTML = "";
 
     const filtered = courses.filter(c => {
-        const regionMatch = activeRegion === "all" || REGION_MAP[activeRegion].includes(c.area);
-        const areaMatch = activeArea === "all" || c.area === activeArea;
-        const levelMatch = activeLevel === "all" || c.difficulty === activeLevel;
+        const regionMatch = activeRegion.includes("all") || activeRegion.some(reg => REGION_MAP[reg].includes(c.area));
+        const areaMatch = activeArea.includes("all") || activeArea.includes(c.area);
+        const levelMatch = activeLevel.includes("all") || activeLevel.includes(c.difficulty);
         return regionMatch && areaMatch && levelMatch;
     });
 
@@ -120,6 +134,10 @@ function renderCourses() {
                          <span class="station"><i class="fas fa-train"></i>${course.transit.split('、')[0].split('駅')[0]}駅</span>
                         <span class="access-pill">${course.accessTime}分</span>
                     </div>
+                    ${course.url ? `
+                    <div class="official-link-hint" style="font-size: 0.7rem; color: var(--accent-color); font-weight: bold;">
+                        <i class="fas fa-external-link-alt"></i> 
+                    </div>` : ''}
                 </div>
             </div>
         `;
@@ -189,7 +207,7 @@ function showDetail(course) {
             <a href="${googleMapsAppUrl}" target="_blank" class="btn-secondary" style="background: #4285F4; color: white; border-color: #4285F4;">
                 Googleマップアプリで開く <i class="fas fa-directions"></i>
             </a>
-            <a href="${course.url}" target="_blank" class="btn-primary">公式サイト <i class="fas fa-external-link-alt"></i></a>
+            ${course.url ? `<a href="${course.url}" target="_blank" class="btn-primary">公式サイト <i class="fas fa-external-link-alt"></i></a>` : ''}
         </div>
     `;
 
@@ -225,17 +243,41 @@ document.querySelectorAll(".chip").forEach(chip => {
         const group = chip.closest(".filter-group").dataset.group;
         const val = chip.dataset.value;
 
-        // Update UI
-        chip.closest(".chips").querySelectorAll(".chip").forEach(c => c.classList.remove("active"));
-        chip.classList.add("active");
-
-        // Update State
         if (group === "region") {
-            activeRegion = val;
-            activeArea = "all"; // Reset area when region changes
+            if (val === "all") {
+                activeRegion = ["all"];
+            } else {
+                if (activeRegion.includes("all")) activeRegion = [];
+                if (activeRegion.includes(val)) {
+                    activeRegion = activeRegion.filter(v => v !== val);
+                    if (activeRegion.length === 0) activeRegion = ["all"];
+                } else {
+                    activeRegion.push(val);
+                }
+            }
+            activeArea = ["all"]; // Reset area when region changes
             updateAreaFilters();
+        } else if (group === "level") {
+            if (val === "all") {
+                activeLevel = ["all"];
+            } else {
+                if (activeLevel.includes("all")) activeLevel = [];
+                if (activeLevel.includes(val)) {
+                    activeLevel = activeLevel.filter(v => v !== val);
+                    if (activeLevel.length === 0) activeLevel = ["all"];
+                } else {
+                    activeLevel.push(val);
+                }
+            }
         }
-        if (group === "level") activeLevel = val;
+
+        // Update UI states for both groups (since they might have changed)
+        document.querySelectorAll(".filter-group[data-group='region'] .chip").forEach(c => {
+            c.classList.toggle("active", activeRegion.includes(c.dataset.value));
+        });
+        document.querySelectorAll(".filter-group[data-group='level'] .chip").forEach(c => {
+            c.classList.toggle("active", activeLevel.includes(c.dataset.value));
+        });
 
         renderCourses();
     });
@@ -254,13 +296,20 @@ document.querySelectorAll(".tab-btn").forEach(btn => {
         document.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
         document.getElementById(`${tabId}-section`).classList.add("active");
 
-        if (tabId === "races") renderRaces();
+        // Fix visibility and sync filters
+        if (tabId === "races") {
+            updateRacePrefectureFilters();
+            renderRaces();
+        } else {
+            updateAreaFilters();
+            renderCourses();
+        }
     });
 });
 
 // --- Race Viewer Logic ---
-let raceRegion = "all";
-let racePrefecture = "all";
+let raceRegion = ["all"];
+let racePrefecture = ["all"];
 let raceMonth = "all";
 let raceKeyword = "";
 
@@ -269,7 +318,7 @@ function updateRacePrefectureFilters() {
     const group = document.getElementById("race-prefecture-filter-group");
     if (!container || !group) return;
 
-    if (raceRegion === "all") {
+    if (raceRegion.includes("all")) {
         group.classList.add("filter-group-hidden");
         return;
     } else {
@@ -282,7 +331,7 @@ function updateRacePrefectureFilters() {
     races_data.forEach(r => {
         allValidPrefs.forEach(validPref => {
             if (r.prefecture.includes(validPref)) {
-                if (raceRegion === "all" || RACE_REGION_MAP[raceRegion].includes(validPref)) {
+                if (raceRegion.some(reg => RACE_REGION_MAP[reg].includes(validPref))) {
                     availablePrefs.add(validPref);
                 }
             }
@@ -291,11 +340,11 @@ function updateRacePrefectureFilters() {
 
     let availablePrefsArray = [...availablePrefs].sort();
 
-    container.innerHTML = `<button class="chip ${racePrefecture === "all" ? 'active' : ''}" data-value="all">All</button>`;
+    container.innerHTML = `<button class="chip ${racePrefecture.includes("all") ? 'active' : ''}" data-value="all">All</button>`;
 
     availablePrefsArray.forEach(pref => {
         const btn = document.createElement("button");
-        btn.className = `chip ${racePrefecture === pref ? 'active' : ''}`;
+        btn.className = `chip ${racePrefecture.includes(pref) ? 'active' : ''}`;
         btn.dataset.value = pref;
         btn.textContent = PREF_SUFFIX_MAP[pref] || pref;
         container.appendChild(btn);
@@ -304,15 +353,58 @@ function updateRacePrefectureFilters() {
     // Re-bind listeners for dynamic area chips
     container.querySelectorAll(".chip").forEach(chip => {
         chip.addEventListener("click", () => {
-            container.querySelectorAll(".chip").forEach(c => c.classList.remove("active"));
-            chip.classList.add("active");
-            racePrefecture = chip.dataset.value;
+            const val = chip.dataset.value;
+            if (val === "all") {
+                racePrefecture = ["all"];
+            } else {
+                if (racePrefecture.includes("all")) racePrefecture = [];
+                if (racePrefecture.includes(val)) {
+                    racePrefecture = racePrefecture.filter(v => v !== val);
+                    if (racePrefecture.length === 0) racePrefecture = ["all"];
+                } else {
+                    racePrefecture.push(val);
+                }
+            }
+            updateRacePrefectureFilters();
             renderRaces();
         });
     });
 }
 
 let upcomingRaceRegion = "all";
+let upcomingRacePref = "all";
+
+function updateUpcomingPrefFilters() {
+    const prefSelect = document.getElementById("upcoming-pref-filter");
+    if (!prefSelect) return;
+
+    prefSelect.innerHTML = '<option value="all">すべて</option>';
+
+    let prefs = [];
+    if (upcomingRaceRegion === "all") {
+        prefs = Object.values(RACE_REGION_MAP).flat();
+    } else {
+        prefs = RACE_REGION_MAP[upcomingRaceRegion] || [];
+    }
+
+    // Filter by actually available prefectures in upcoming list
+    const currentMonth = new Date().getMonth() + 1;
+    const targetMonths = [(currentMonth + 1) % 12 || 12, (currentMonth + 2) % 12 || 12, (currentMonth + 3) % 12 || 12];
+    const available = new Set();
+    races_data.filter(r => targetMonths.includes(r.month)).forEach(r => {
+        prefs.forEach(p => {
+            if (r.prefecture.includes(p)) available.add(p);
+        });
+    });
+
+    [...available].sort().forEach(p => {
+        const opt = document.createElement("option");
+        opt.value = p;
+        opt.textContent = PREF_SUFFIX_MAP[p] || p;
+        if (upcomingRacePref === p) opt.selected = true;
+        prefSelect.appendChild(opt);
+    });
+}
 
 function renderUpcomingRaces() {
     const container = document.getElementById("upcoming-races-list");
@@ -332,6 +424,10 @@ function renderUpcomingRaces() {
         if (allowedPrefs) {
             upcoming = upcoming.filter(r => allowedPrefs.some(p => r.prefecture.includes(p)));
         }
+    }
+
+    if (upcomingRacePref !== "all") {
+        upcoming = upcoming.filter(r => r.prefecture.includes(upcomingRacePref));
     }
 
     // Sort by month/date approximated
@@ -357,7 +453,7 @@ function renderUpcomingRaces() {
                             <span class="u-dist"><i class="fas fa-route"></i> ${race.distance}</span>
                         </div>
                     </div>
-                    <a href="${race.link}" target="_blank" class="u-link"><i class="fas fa-external-link-alt"></i></a>
+                    ${race.link ? `<a href="${race.link}" target="_blank" class="u-link"><i class="fas fa-external-link-alt"></i></a>` : ''}
                 </div>
             `).join('')}
         </div>
@@ -370,8 +466,8 @@ function renderRaces() {
     container.innerHTML = "";
 
     const filtered = races_data.filter(r => {
-        const regionMatch = raceRegion === "all" || (RACE_REGION_MAP[raceRegion] && RACE_REGION_MAP[raceRegion].some(p => r.prefecture.includes(p)));
-        const prefMatch = racePrefecture === "all" || r.prefecture.includes(racePrefecture);
+        const regionMatch = raceRegion.includes("all") || (raceRegion.some(reg => RACE_REGION_MAP[reg] && RACE_REGION_MAP[reg].some(p => r.prefecture.includes(p))));
+        const prefMatch = racePrefecture.includes("all") || racePrefecture.some(p => r.prefecture.includes(p));
         const monthMatch = raceMonth === "all" || r.month.toString() === raceMonth;
         const keywordMatch = raceKeyword === "" ||
             r.name.toLowerCase().includes(raceKeyword.toLowerCase()) ||
@@ -406,7 +502,7 @@ function renderRaces() {
                 </div>
             </div>
             <div class="card-footer">
-                <a href="${race.link}" target="_blank" class="race-link">公式サイト <i class="fas fa-external-link-alt"></i></a>
+                ${race.link ? `<a href="${race.link}" target="_blank" class="race-link">公式サイト <i class="fas fa-external-link-alt"></i></a>` : ''}
             </div>
         `;
         container.appendChild(card);
@@ -418,13 +514,28 @@ function renderRaces() {
 // Handle static race region chips
 document.querySelectorAll(".filter-group[data-group='race-region'] .chip").forEach(chip => {
     chip.addEventListener("click", () => {
-        const container = chip.closest(".chips");
-        container.querySelectorAll(".chip").forEach(c => c.classList.remove("active"));
-        chip.classList.add("active");
+        const val = chip.dataset.value;
 
-        raceRegion = chip.dataset.value;
-        racePrefecture = "all"; // Reset prefecture when region changes
+        if (val === "all") {
+            raceRegion = ["all"];
+        } else {
+            if (raceRegion.includes("all")) raceRegion = [];
+            if (raceRegion.includes(val)) {
+                raceRegion = raceRegion.filter(v => v !== val);
+                if (raceRegion.length === 0) raceRegion = ["all"];
+            } else {
+                raceRegion.push(val);
+            }
+        }
+
+        racePrefecture = ["all"]; // Reset prefecture when region changes
         updateRacePrefectureFilters();
+
+        // Update UI state
+        document.querySelectorAll(".filter-group[data-group='race-region'] .chip").forEach(c => {
+            c.classList.toggle("active", raceRegion.includes(c.dataset.value));
+        });
+
         renderRaces();
     });
 });
@@ -443,6 +554,16 @@ const upcomingFilter = document.getElementById("upcoming-region-filter");
 if (upcomingFilter) {
     upcomingFilter.addEventListener("change", (e) => {
         upcomingRaceRegion = e.target.value;
+        upcomingRacePref = "all";
+        updateUpcomingPrefFilters();
+        renderUpcomingRaces();
+    });
+}
+
+const upcomingPrefFilter = document.getElementById("upcoming-pref-filter");
+if (upcomingPrefFilter) {
+    upcomingPrefFilter.addEventListener("change", (e) => {
+        upcomingRacePref = e.target.value;
         renderUpcomingRaces();
     });
 }
@@ -451,6 +572,7 @@ if (upcomingFilter) {
 document.addEventListener("DOMContentLoaded", () => {
     updateAreaFilters();
     updateRacePrefectureFilters();
+    updateUpcomingPrefFilters();
     renderCourses();
     renderUpcomingRaces();
     renderRaces();
