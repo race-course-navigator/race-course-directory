@@ -57,7 +57,7 @@ body {
 
 .hero-content {
     position: relative;
-    z-index: 1;
+    z-index: 5;
 }
 
 h1 {
@@ -1046,7 +1046,8 @@ h1 .accent {
 
 .upcoming-summary {
     list-style: none;
-    padding: 15px 20px;
+    padding: 20px 25px;
+    /* Increased hit area */
     cursor: pointer;
     font-weight: 800;
     font-size: 1.1rem;
@@ -1054,6 +1055,9 @@ h1 .accent {
     justify-content: space-between;
     align-items: center;
     color: var(--text-primary);
+    position: relative;
+    z-index: 2;
+    /* Ensure it's above content */
 }
 
 .upcoming-summary::-webkit-details-marker {

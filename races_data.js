@@ -1,266 +1,5 @@
 const races_data = [
   {
-    "month": 2,
-    "date": "2月1日(日)",
-    "name": "奈良 石舞台100トレイルランニングレース",
-    "prefecture": "奈良",
-    "distance": "120k･80k･40k",
-    "category": "ロング",
-    "link": "https://go-trail.net/pages/%E7%9F%B3%E8%88%9E%E5%8F%B0100"
-  },
-  {
-    "month": 2,
-    "date": "2月7日(土)",
-    "name": "雪上クライムランIN牛岳温泉スキー場",
-    "prefecture": "富山",
-    "distance": "約1.6k",
-    "category": "ショート",
-    "link": "https://yamadamura.com/blog/"
-  },
-  {
-    "month": 2,
-    "date": "2月7日(土)",
-    "name": "かたしな高原スノーランニング",
-    "prefecture": "群馬",
-    "distance": "7.2k･3.6k･1k",
-    "category": "ショート",
-    "link": "https://moshicom.com/138001/"
-  },
-  {
-    "month": 2,
-    "date": "2月8日(日)",
-    "name": "鬼ヶ岩屋マウンテンチャレンジ",
-    "prefecture": "徳島",
-    "distance": "約13k",
-    "category": "ショート",
-    "link": "https://www.outdoor-sports.info/onigaiwaya"
-  },
-  {
-    "month": 2,
-    "date": "2月8日(日)",
-    "name": "スノートレイルランナーズカップ越後丘陵公園",
-    "prefecture": "新潟",
-    "distance": "8k･4k",
-    "category": "ショート",
-    "link": "https://trailrunners.jp/event/snowechigo-2026/"
-  },
-  {
-    "month": 2,
-    "date": "2月8日(日)",
-    "name": "丸子アルプストレイルラン",
-    "prefecture": "静岡",
-    "distance": "21k･キッズ2k",
-    "category": "ミドル",
-    "link": "https://marikoalps.com/"
-  },
-  {
-    "month": 2,
-    "date": "2月8日(日)",
-    "name": "スノートレイルランナーズカップ越後丘陵公園",
-    "prefecture": "新潟",
-    "distance": "8k･4k",
-    "category": "ショート",
-    "link": "https://trailrunners.jp/event/snowechigo-2026/"
-  },
-  {
-    "month": 2,
-    "date": "2月8日(日)",
-    "name": "別海アイスマラソン",
-    "prefecture": "北海道",
-    "distance": "42k･16k･4.2k",
-    "category": "ミドル",
-    "link": "https://icemarathon.jp/"
-  },
-  {
-    "month": 2,
-    "date": "2月8日(日)",
-    "name": "医王山スノーシューレース",
-    "prefecture": "石川",
-    "distance": " 10〜15k･5〜10k",
-    "category": "ショート",
-    "link": "https://snowshoedays.info/"
-  },
-  {
-    "month": 2,
-    "date": "2月8日(日)",
-    "name": "かたのビッグロックトレイル",
-    "prefecture": "大阪",
-    "distance": "約23k(シングル･トリオ)･3-1k(キッズ)",
-    "category": "ミドル",
-    "link": "https://crossd.jp/bigrock2025/"
-  },
-  {
-    "month": 2,
-    "date": "2月8日(日)",
-    "name": "冠岳トレイル in いちき串木野",
-    "prefecture": "鹿児島",
-    "distance": "19.5k･11k",
-    "category": "ショート",
-    "link": "https://universal-field.com/event/kanmuridake-trail/"
-  },
-  {
-    "month": 2,
-    "date": "2月14日(土)",
-    "name": "UTMT／アーバントレイル龍ノ口",
-    "prefecture": "岡山",
-    "distance": "12k･8k･約3k",
-    "category": "ショート",
-    "link": "https://racinvan.com/"
-  },
-  {
-    "month": 2,
-    "date": "2月14日(土)",
-    "name": "大紀町シーサイドトレイル",
-    "prefecture": "三重",
-    "distance": "23k･14k･1.7k&900m(キッズ小学生)",
-    "category": "ロング",
-    "link": "http://www.nature-scene.net/taiki/"
-  },
-  {
-    "month": 2,
-    "date": "2月15日(日)",
-    "name": "NagasakiRound Trail",
-    "prefecture": "長崎",
-    "distance": "約47k･約20k",
-    "category": "ミドル",
-    "link": "https://n-r-t.net"
-  },
-  {
-    "month": 2,
-    "date": "2月15日(日)",
-    "name": "くだまつ笠戸島アイランドトレイル",
-    "prefecture": "山口",
-    "distance": "30k(ソロ･リレー)･17k",
-    "category": "ミドル",
-    "link": "http://kasadojima-islandtrail.com/"
-  },
-  {
-    "month": 2,
-    "date": "2月15日(日)",
-    "name": "綾・国富ツインピークス",
-    "prefecture": "宮﨑",
-    "distance": "35k･20k",
-    "category": "ミドル",
-    "link": "https://universal-field.com/event/aya-syaka-twinpeaks/"
-  },
-  {
-    "month": 2,
-    "date": "2月15日(日)",
-    "name": "梅の里トレイルラン",
-    "prefecture": "和歌山",
-    "distance": "27k･10k",
-    "category": "ミドル",
-    "link": "https://umenosatotrail.wixsite.com/umenosatotrail"
-  },
-  {
-    "month": 2,
-    "date": "2月15日(日)",
-    "name": "千葉アスレチックドギーズ",
-    "prefecture": "千葉",
-    "distance": "カニクロス(犬と走る)3k･1.5k",
-    "category": "ショート",
-    "link": "https://adoggies.base.shop/items/110662534"
-  },
-  {
-    "month": 2,
-    "date": "2月21日(土)_ 2月22日(日)",
-    "name": "大文字100",
-    "prefecture": "京都",
-    "distance": "(12k周回)100k･72k･24k",
-    "category": "ロング",
-    "link": "https://go-trail.net/pages/%E5%A4%A7%E6%96%87%E5%AD%97%EF%BC%91%EF%BC%90%EF%BC%90"
-  },
-  {
-    "month": 2,
-    "date": "2月21日(土)_ 2月22日(日)",
-    "name": "エキシビジョン～HAT（氷上青垣多可）グレートトレイル～",
-    "prefecture": "氷上青垣多可",
-    "distance": "118k･64k",
-    "category": "ロング",
-    "link": "https://trailrun-tamba.com/series2026/hat202602/"
-  },
-  {
-    "month": 2,
-    "date": "2月22日(日)",
-    "name": "DA MONDE TRAIL Presents｢Way to Go!｣",
-    "prefecture": "愛知",
-    "distance": "(8.3k周回)1周･2周･3周(ソロ･ペア",
-    "category": "ショート",
-    "link": "https://damonde.jp/waytogo/"
-  },
-  {
-    "month": 2,
-    "date": "2月22日(日)",
-    "name": "房総鋸山トレイルラン",
-    "prefecture": "その他",
-    "distance": "22k･11k",
-    "category": "ミドル",
-    "link": "https://www.fields-co.jp/"
-  },
-  {
-    "month": 2,
-    "date": "2月22日(日)",
-    "name": "枚方Spa Trail",
-    "prefecture": "大阪",
-    "distance": "18k",
-    "category": "ショート",
-    "link": "https://soratrail.wixsite.com/hspa2026"
-  },
-  {
-    "month": 2,
-    "date": "2月22日(日)",
-    "name": "TrailRunning Oita 国東六郷満山(0to5)～国東ビーチ～",
-    "prefecture": "0to5",
-    "distance": "12.8k(ビーチマラソン)･3時間耐久リレー",
-    "category": "ショート",
-    "link": "https://sites.google.com/view/optra-fttr/"
-  },
-  {
-    "month": 2,
-    "date": "2月22日(日)",
-    "name": "表丹沢LoopChallenge",
-    "prefecture": "神奈川",
-    "distance": "[5k周回] 6時間耐久･3時間耐久･[ひよこの部] 約42.195ｍ",
-    "category": "ロング",
-    "link": "https://universal-field.com/event/omotetanzawa/"
-  },
-  {
-    "month": 2,
-    "date": "2月22日(日)_ 2月23日(祝)",
-    "name": "GGR石切場100",
-    "prefecture": "広島",
-    "distance": "100k(2.9km周回)",
-    "category": "ロング",
-    "link": "https://ggrsolo.themedia.jp/"
-  },
-  {
-    "month": 2,
-    "date": "2月28日(土)",
-    "name": "善通寺五岳山 空海トレイル",
-    "prefecture": "香川",
-    "distance": "45k･30k･15k･6.5k",
-    "category": "ミドル",
-    "link": "https://runningdrunkers.com/ztjkukai/corsemap/"
-  },
-  {
-    "month": 2,
-    "date": "2月28日(土)",
-    "name": "八海山スカイスノー",
-    "prefecture": "新潟",
-    "distance": "2.5k･1.5k･1k",
-    "category": "ショート",
-    "link": "https://hakkaisan.run/"
-  },
-  {
-    "month": 2,
-    "date": "2月28日(土)_ 3月1日(日)",
-    "name": "山城GT.100",
-    "prefecture": "岐阜",
-    "distance": "100kセルフチャレンジ(ソロ･チーム)",
-    "category": "ロング",
-    "link": "https://yamajiro100.jp/gt100.html"
-  },
-  {
     "month": 3,
     "date": "3月1日(日)",
     "name": "雪国魚沼･欠ノ上シューイング･レース",
@@ -1172,11 +911,29 @@ const races_data = [
   {
     "month": 5,
     "date": "5月24日(日)",
+    "name": "いながわ里山猪道トレイルラン",
+    "prefecture": "兵庫",
+    "distance": "20k･11.3k･4/6k･2.3k",
+    "category": "ミドル",
+    "link": "http://inagawa-trail.jimdo.com/"
+  },
+  {
+    "month": 5,
+    "date": "5月24日(日)",
     "name": "秋吉台カルストトレイルラン",
     "prefecture": "山口",
     "distance": "約50k･約30k･約20k",
     "category": "ロング",
     "link": "https://akiyoshidai-trail.com/"
+  },
+  {
+    "month": 5,
+    "date": "5月24日(日)",
+    "name": "くずまき塩の道トレイル･リレーマラソン(",
+    "prefecture": "岩手",
+    "distance": "3k周回3時間耐久リレー(1-4人)",
+    "category": "ショート",
+    "link": "https://runnet.jp/entry/runtes/user/pc/moshicomDetailAction.do?raceId=141899&div=1"
   },
   {
     "month": 5,
@@ -1307,7 +1064,7 @@ const races_data = [
   {
     "month": 6,
     "date": "6月7日(日)",
-    "name": "DANDO ROUND TRIP40＆20",
+    "name": "DANDO ROUND TRIP40",
     "prefecture": "愛知",
     "distance": "40k･20k",
     "category": "ミドル",
@@ -1503,6 +1260,15 @@ const races_data = [
     "link": "https://www.satoyamaworks.com"
   },
   {
+    "month": 6,
+    "date": "6月28日(日)",
+    "name": "鹿角花輪トレイル",
+    "prefecture": "秋田",
+    "distance": "26k･5k",
+    "category": "ミドル",
+    "link": "https://kazunotrail.jp/"
+  },
+  {
     "month": 7,
     "date": "7月4日(土)",
     "name": "貝月山白龍トレイルラン",
@@ -1519,6 +1285,15 @@ const races_data = [
     "distance": "50k･32k･18k･2k",
     "category": "ロング",
     "link": "https://local-gain.com/minamiaso_trail/summer/"
+  },
+  {
+    "month": 7,
+    "date": "7月4日(土)",
+    "name": "“ROCKIN’ BEAR”妙高トレイルランニングレース",
+    "prefecture": "新潟",
+    "distance": " 48k･17k･6.5k･[キッズ]3k･2k",
+    "category": "ミドル",
+    "link": "https://www.nature-scene.net/myoko/"
   },
   {
     "month": 7,
@@ -1559,11 +1334,11 @@ const races_data = [
   {
     "month": 7,
     "date": "7月11日(土)_ 7月12日(日)",
-    "name": "NORTH KYOTO100/66/33",
+    "name": "NORTH KYOTO 100 TRAIL RUNNING RACE",
     "prefecture": "京都",
     "distance": "100k･66k･33k",
     "category": "ロング",
-    "link": "https://go-trail.net/"
+    "link": "https://go-trail.net/pages/north-kyoto-100"
   },
   {
     "month": 7,
@@ -1585,6 +1360,15 @@ const races_data = [
   },
   {
     "month": 7,
+    "date": "7月12日(日)",
+    "name": "牛松山スカイレース夏",
+    "prefecture": "京都",
+    "distance": "15k･VK4k ",
+    "category": "ショート",
+    "link": "https://team-sky-kyoto.jimdofree.com/"
+  },
+  {
+    "month": 7,
     "date": "7月18日(土)_ 7月19日(日)",
     "name": "OSJ ONTAKE100",
     "prefecture": "長野",
@@ -1600,6 +1384,15 @@ const races_data = [
     "distance": "65k･37k･14k･7k(キッズ･ファミリー)",
     "category": "ロング",
     "link": "https://s-mountain.com/nozawa/"
+  },
+  {
+    "month": 7,
+    "date": "7月19日(日)",
+    "name": "THE岩櫃城忍び登山",
+    "prefecture": "群馬",
+    "distance": "15k･10k･5k･3.5k",
+    "category": "ショート",
+    "link": "https://www.iwabitsujo-shinobitozan.com/"
   },
   {
     "month": 7,
@@ -1636,6 +1429,24 @@ const races_data = [
     "distance": "13k･3k",
     "category": "ショート",
     "link": "https://trailrunners.jp/event/niigata-2026/"
+  },
+  {
+    "month": 7,
+    "date": "7月26日(日)",
+    "name": "大雪山トレイルジャーニー",
+    "prefecture": "北海道",
+    "distance": "60k･40k･15k",
+    "category": "ロング",
+    "link": "https://daisetsu-tj.com/"
+  },
+  {
+    "month": 8,
+    "date": "8月1日(土)",
+    "name": "NOZAWA TRAIL FES",
+    "prefecture": "長野",
+    "distance": "27k･12k･キッズ2k･1k",
+    "category": "ミドル",
+    "link": "http://www.nature-scene.net/nozawa/"
   },
   {
     "month": 8,
@@ -1712,7 +1523,7 @@ const races_data = [
   {
     "month": 9,
     "date": "9月12日(土)",
-    "name": "京都 グランドトラバース",
+    "name": "京都グランドトラバース",
     "prefecture": "京都",
     "distance": "60k",
     "category": "ロング",
@@ -1762,6 +1573,15 @@ const races_data = [
     "distance": "75k･48k･25k",
     "category": "ロング",
     "link": "https://tukubarenzantrail.teamsportsjapan.jp/"
+  },
+  {
+    "month": 9,
+    "date": "9月27日(日)",
+    "name": "Nordisk Mountain Trail in YAMANASHI CHUO",
+    "prefecture": "山梨",
+    "distance": "約25k･約12k",
+    "category": "ミドル",
+    "link": "https://yamanashichuotrail.com/"
   },
   {
     "month": 10,
