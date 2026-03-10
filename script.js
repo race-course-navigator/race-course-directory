@@ -292,26 +292,24 @@ document.querySelectorAll(".tab-btn").forEach(btn => {
         document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
         btn.classList.add("active");
 
-        // Update Content
+        // Update Content: Ensure only the targeted section gets 'active'
         document.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
-        document.getElementById(`${tabId}-section`).classList.add("active");
+        const targetSection = document.getElementById(`${tabId}-section`);
+        if (targetSection) {
+            targetSection.classList.add("active");
+        }
 
-        // Fix visibility and sync filters
-        // Use requestAnimationFrame and small timeout to ensure DOM state is settled for rendering
-        requestAnimationFrame(() => {
-            setTimeout(() => {
-                if (tabId === "races") {
-                    updateRacePrefectureFilters();
-                    renderRaces();
-                } else {
-                    updateAreaFilters();
-                    renderCourses();
-                }
-            }, 50);
-        });
+        // Immediately sync and render based on the new tab
+        if (tabId === "races") {
+            updateRacePrefectureFilters();
+            renderRaces();
+        } else if (tabId === "courses") {
+            updateAreaFilters();
+            renderCourses();
+        }
 
-        // Scroll to top to ensure filters are visible
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        // Scroll to top immediately to ensure filters are in view
+        window.scrollTo({ top: 0 });
     });
 });
 
