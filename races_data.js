@@ -307,15 +307,6 @@ const races_data = [
   },
   {
     "month": 4,
-    "date": "4月10日(金)_ 4月12日(日)",
-    "name": "HIROSHIMA TRAIL",
-    "prefecture": "広島",
-    "distance": "100k･50k･20k",
-    "category": "ロング",
-    "link": "https://hiroshima-trailrun.com/"
-  },
-  {
-    "month": 4,
     "date": "4月11日(土)",
     "name": "大文字･比叡山 ケーブルトレイルラン",
     "prefecture": "京都",
@@ -385,6 +376,15 @@ const races_data = [
     "distance": "160mile･80k･50k･16k",
     "category": "ロング",
     "link": "https://go-trail.net/pages/%E5%A4%A9%E3%83%B6%E7%80%AC100"
+  },
+  {
+    "month": 4,
+    "date": "4月11日(土)_ 4月12日(日)",
+    "name": "HIROSHIMA TRAIL",
+    "prefecture": "広島",
+    "distance": "100k･50k･20k",
+    "category": "ロング",
+    "link": "https://hiroshima-trailrun.com/"
   },
   {
     "month": 4,
@@ -565,6 +565,15 @@ const races_data = [
     "distance": "約20k･約10k",
     "category": "ミドル",
     "link": "https://runninghigh.jp/haga_ex/"
+  },
+  {
+    "month": 4,
+    "date": "4月29日(祝)",
+    "name": "東京アスレチックドギーズ – 水元カニクロス",
+    "prefecture": "東京",
+    "distance": "カニクロス 1.5k･400m",
+    "category": "ロング",
+    "link": "https://www.canicross-japan.com"
   },
   {
     "month": 5,
@@ -817,6 +826,15 @@ const races_data = [
     "distance": "26k･13k",
     "category": "ミドル",
     "link": "https://universal-field.com/event/kagamizu-forest-trail/index.html"
+  },
+  {
+    "month": 5,
+    "date": "5月17日(日)",
+    "name": "茨城アスレチックドギーズ – カニクロス&バイクジョアリング",
+    "prefecture": "茨城",
+    "distance": "1.5k カニクロス･バイクジョアリング",
+    "category": "ショート",
+    "link": "https://www.canicross-japan.com"
   },
   {
     "month": 5,
@@ -1198,6 +1216,15 @@ const races_data = [
   },
   {
     "month": 6,
+    "date": "6月20日(土)",
+    "name": "最速参拝競走 in 鳳来寺2026 -1425段を駆け上がれ-",
+    "prefecture": "愛知",
+    "distance": "階段1425段",
+    "category": "ロング",
+    "link": "https://www.facebook.com/events/1187477821656962/?acontext=%257B%2522event_action_history%2522%253A[%257B%2522extra_data%2522%253A%2522%2522%252C%2522mechanism%2522%253A%2522unknown%2522%252C%2522surface%2522%253A%2522external_search_engine%2522%257D%252C%257B%2522extra_data%2522%253A%2522%2522%252C%2522mechanism%2522%253A%2522left_rail%2522%252C%2522surface%2522%253A%2522bookmark%2522%257D%252C%257B%2522extra_data%2522%253A%2522%2522%252C%2522mechanism%2522%253A%2522calendar_tab_event%2522%252C%2522surface%2522%253A%2522bookmark_calendar%2522%257D]%252C%2522ref_notif_type%2522%253Anull%257D"
+  },
+  {
+    "month": 6,
     "date": "6月20日(土)_ 6月21日(日)",
     "name": "KAGA SPA TRAIL ENDURANCE 100 by UTMB®",
     "prefecture": "石川",
@@ -1369,6 +1396,15 @@ const races_data = [
   },
   {
     "month": 7,
+    "date": "7月12日(日)",
+    "name": "板室温泉スパトレイル16K&48K",
+    "prefecture": "栃木",
+    "distance": "48k16k",
+    "category": "ミドル",
+    "link": "https://moshicom.com/125394/"
+  },
+  {
+    "month": 7,
     "date": "7月18日(土)_ 7月19日(日)",
     "name": "OSJ ONTAKE100",
     "prefecture": "長野",
@@ -1504,6 +1540,15 @@ const races_data = [
   },
   {
     "month": 9,
+    "date": "9月5日(土)",
+    "name": "中央アルプス西駒んボッカ",
+    "prefecture": "長野",
+    "distance": "11.6km [薪3k･薪15k]",
+    "category": "ショート",
+    "link": "http://2450bokka.web.fc2.com/"
+  },
+  {
+    "month": 9,
     "date": "9月6日(日)",
     "name": "丸沼高原日光白根山アセント",
     "prefecture": "群馬",
@@ -1582,6 +1627,15 @@ const races_data = [
     "distance": "約25k･約12k",
     "category": "ミドル",
     "link": "https://yamanashichuotrail.com/"
+  },
+  {
+    "month": 9,
+    "date": "9月27日(日)",
+    "name": "若狭路トレイルラン",
+    "prefecture": "福井",
+    "distance": "約43k･約32k･約15k",
+    "category": "ミドル",
+    "link": "http://www.wakasaji-tr.com/"
   },
   {
     "month": 10,
@@ -1735,5 +1789,14 @@ const races_data = [
     "distance": "30.3k･14.2k･8.9k",
     "category": "ミドル",
     "link": "https://sportswindow.net/event-post/hitachinokunitrail/"
+  },
+  {
+    "month": 12,
+    "date": "12月20日(日)",
+    "name": "房総鋸山トレイルラン",
+    "prefecture": "千葉",
+    "distance": "22k･11k",
+    "category": "ミドル",
+    "link": "https://www.fields-co.jp/nokogiriyama/"
   }
 ];
