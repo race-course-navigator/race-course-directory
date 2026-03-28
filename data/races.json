@@ -523,6 +523,15 @@
   },
   {
     "month": 4,
+    "date": "4月19日(日)",
+    "name": "RunRunトレイルかごしまinグリーンファーム",
+    "prefecture": "鹿児島",
+    "distance": "[2.5k周回] 10k(ソロ･リレー)･5k･キッズ2.5k",
+    "category": "ショート",
+    "link": "https://universal-field.com/event/runrun-trail-gf/"
+  },
+  {
+    "month": 4,
     "date": "4月24日(金)_ 4月26日(日)",
     "name": "Mt.FUJI100",
     "prefecture": "静岡･山梨",
@@ -727,6 +736,15 @@
     "distance": "20k･14k",
     "category": "ミドル",
     "link": "http://www.futagamitrail.com/"
+  },
+  {
+    "month": 5,
+    "date": "5月16日(土)",
+    "name": "Red Bull 400",
+    "prefecture": "北海道",
+    "distance": "400ｍ(平均35度)ソロ･リレー",
+    "category": "ロング",
+    "link": "https://www.redbull.com/jp-ja/events/red-bull-400"
   },
   {
     "month": 5,
@@ -1432,6 +1450,15 @@
   },
   {
     "month": 7,
+    "date": "7月19日(日)",
+    "name": "霧島･えびの高原エクストリームトレイル",
+    "prefecture": "宮﨑･鹿児島",
+    "distance": "約62k･約34k",
+    "category": "ロング",
+    "link": "https://universal-field.com/event/kirishima-ebino-extr/"
+  },
+  {
+    "month": 7,
     "date": "7月24日(金)",
     "name": "富士登山競走",
     "prefecture": "山梨",
@@ -1495,6 +1522,33 @@
   },
   {
     "month": 8,
+    "date": "8月8日(土)",
+    "name": "栃木トレーニングトレイルレース夏inみかも山",
+    "prefecture": "栃木",
+    "distance": "22.8k･15.2k･7.6k",
+    "category": "ミドル",
+    "link": "http://www.kamakurun.jp/tochigiken-getsurei"
+  },
+  {
+    "month": 8,
+    "date": "8月9日(日)",
+    "name": "栃木トレーニングトレイルレース夏inみかも山",
+    "prefecture": "栃木",
+    "distance": "22.8k･15.2k･7.6k",
+    "category": "ミドル",
+    "link": "http://www.kamakurun.jp/tochigiken-getsurei"
+  },
+  {
+    "month": 8,
+    "date": "8月9日(日)",
+    "name": "鉢盛山登山マラソン",
+    "prefecture": "長野",
+    "distance": "38k･32k･12k",
+    "category": "ミドル",
+    "link": "https://hachimori-marathon.jp/"
+  },
+  {
+    "month": 8,
     "date": "8月11日(祝)",
     "name": "Mt.六甲トレイルランサマーピクニック",
     "prefecture": "兵庫",
@@ -1519,6 +1573,15 @@
     "distance": "32k･20k",
     "category": "ミドル",
     "link": "http://www.kfctriathlon.com/html/event_trail.html"
+  },
+  {
+    "month": 8,
+    "date": "8月28日(金)_ 8月30日(日)",
+    "name": "志賀高原100",
+    "prefecture": "長野",
+    "distance": "100k･55k･21k",
+    "category": "ロング",
+    "link": "http://www.nature-scene.net/shiga100/"
   },
   {
     "month": 8,
